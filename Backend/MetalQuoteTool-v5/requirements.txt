@@ -1,0 +1,29 @@
+# Core
+openpyxl>=3.1.0
+ezdxf>=1.3.0
+matplotlib>=3.7.0
+reportlab>=4.0.0
+numpy>=1.24.0
+
+# UI — Mac only
+tkmacosx>=1.0.5 ; sys_platform == 'darwin'
+
+# Paths
+platformdirs>=3.0.0
+
+# 3D CAD — user installs one of these (optional)
+# Via conda: conda install -c conda-forge pythonocc-core
+# Via pip:   pip install cadquery-ocp
+
+# Web API server (server.py — FastAPI REST layer for Next.js frontend)
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+python-multipart>=0.0.9
+
+# Authentication & Database
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.9
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+python-dotenv>=1.0.0
+pydantic[email]>=2.7.0

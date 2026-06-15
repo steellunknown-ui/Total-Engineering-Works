@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment variables — NEVER commit
+.env
+.env.*
+!.env.example
+
+# Database
+*.db
+*.sqlite3
+
+# Generated output (quotes, PDFs produced at runtime)
+data/generated/
+data/exports/
+
+# Pytest
+.pytest_cache/
+htmlcov/
+.coverage
+*.cover
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Mac artifacts
+.DS_Store
+__MACOSX/
+*.icns
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Alembic (keep the folder, not the generated versions if huge)
+# alembic/versions/*.py  # Uncomment if you want to exclude migrations

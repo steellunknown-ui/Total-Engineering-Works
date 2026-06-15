@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Approximate Cost Estimate</title>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   PAGE SETUP — A4 Portrait
+   ═══════════════════════════════════════════════════════════ */
+@page {
+  size: A4 portrait;
+  margin: 12mm 14mm 20mm 14mm;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 9pt;
+  color: #111827;
+  background: white;
+  line-height: 1.4;
+}
+
+.no-break      { page-break-inside: avoid; }
+.text-right    { text-align: right; }
+.text-center   { text-align: center; }
+.bold          { font-weight: bold; }
+.muted         { color: #6b7280; }
+.small         { font-size: 7.5pt; }
+.mono          { font-family: "Courier New", Courier, monospace; }
+
+/* ═══════════════════════════════════════════════════════════
+   HEADER & BADGE
+   ═══════════════════════════════════════════════════════════ */
+.header-block {
+  width: 100%;
+  border-bottom: 3pt solid #10b981; /* Green distinct color */
+  padding-bottom: 5pt;
+  margin-bottom: 12pt;
+  overflow: hidden;
+}
+.header-left {
+  float: left;
+  width: 50%;
+}
+.header-right {
+  float: right;
+  text-align: right;
+  width: 48%;
+}
+.company-name {
+  font-size: 16pt;
+  font-weight: bold;
+  color: #065f46;
+  letter-spacing: 0pt;
+}
+.company-detail {
+  font-size: 7.5pt;
+  color: #374151;
+  margin-top: 1pt;
+}
+
+.doc-title {
+  font-size: 16pt;
+  font-weight: bold;
+  color: #065f46;
+  text-transform: uppercase;
+}
+.doc-subtitle {
+  font-size: 8pt;
+  color: #6b7280;
+  margin-top: 2pt;
+}
+
+/* BIG BADGE */
+.warning-badge {
+  background-color: #fef2f2;
+  border: 1pt solid #ef4444;
+  color: #b91c1c;
+  padding: 6pt;
+  font-size: 11pt;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 15pt;
+  border-radius: 4pt;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INFO GRID
+   ═══════════════════════════════════════════════════════════ */
+.info-grid {
+  width: 100%;
+  margin-bottom: 12pt;
+  overflow: hidden;
+}
+.info-col {
+  float: left;
+  width: 48%;
+  padding-right: 8pt;
+  vertical-align: top;
+}
+.info-col:last-child { padding-right: 0; float: right; }
+.info-row {
+  width: 100%;
+  margin-bottom: 3pt;
+  overflow: hidden;
+}
+.info-label {
+  float: left;
+  font-size: 8pt;
+  color: #6b7280;
+  text-transform: uppercase;
+  width: 36%;
+  padding-top: 1pt;
+}
+.info-value {
+  float: right;
+  font-size: 9pt;
+  color: #111827;
+  font-weight: bold;
+  width: 62%;
+  word-break: break-word;
+}
+.section-title {
+  font-size: 8pt;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #065f46;
+  border-bottom: 1pt solid #10b981;
+  padding-bottom: 2pt;
+  margin-bottom: 6pt;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ITEMS TABLE
+   ═══════════════════════════════════════════════════════════ */
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12pt;
+  font-size: 8.5pt;
+}
+.items-table thead tr {
+  background-color: #065f46;
+  color: white;
+}
+.items-table thead th {
+  padding: 5pt;
+  text-align: left;
+  font-size: 7.5pt;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.items-table thead th.r { text-align: right; }
+.items-table tbody tr {
+  page-break-inside: avoid;
+}
+.items-table tbody tr:nth-child(even) {
+  background-color: #ecfdf5;
+}
+.items-table tbody td {
+  padding: 5pt;
+  vertical-align: top;
+  border-bottom: 0.5pt solid #a7f3d0;
+}
+.items-table tbody td.r { text-align: right; }
+
+/* ═══════════════════════════════════════════════════════════
+   SUMMARY BLOCK
+   ═══════════════════════════════════════════════════════════ */
+.summary-block {
+  float: right;
+  width: 200pt;
+  border: 1pt solid #10b981;
+  border-radius: 3pt;
+  overflow: hidden;
+  margin-bottom: 12pt;
+  page-break-inside: avoid;
+}
+.summary-row {
+  width: 100%;
+  border-bottom: 0.5pt solid #a7f3d0;
+  overflow: hidden;
+}
+.summary-label {
+  float: left;
+  padding: 5pt 8pt;
+  font-size: 8.5pt;
+  color: #065f46;
+  width: 50%;
+}
+.summary-value {
+  float: right;
+  padding: 5pt 8pt;
+  font-size: 9pt;
+  color: #111827;
+  font-weight: bold;
+  text-align: right;
+  width: 46%;
+}
+.summary-total-row {
+  background-color: #065f46;
+  overflow: hidden;
+}
+.summary-total-label {
+  float: left;
+  padding: 6pt 8pt;
+  font-size: 9.5pt;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  width: 48%;
+}
+.summary-total-value {
+  float: right;
+  padding: 6pt 8pt;
+  font-size: 11pt;
+  font-weight: bold;
+  color: white;
+  text-align: right;
+  width: 48%;
+}
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DISCLAIMER
+   ═══════════════════════════════════════════════════════════ */
+.disclaimer-block {
+  border: 1.5pt dashed #ef4444;
+  padding: 10pt;
+  background: #fef2f2;
+  color: #7f1d1d;
+  font-size: 8.5pt;
+  page-break-inside: avoid;
+  margin-bottom: 10pt;
+}
+.disclaimer-title {
+  font-weight: bold;
+  margin-bottom: 4pt;
+  font-size: 9pt;
+  text-transform: uppercase;
+}
+.disclaimer-list {
+  margin-left: 15pt;
+  margin-top: 4pt;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════ */
+.doc-footer {
+  border-top: 0.5pt solid #d1d5db;
+  padding-top: 5pt;
+  font-size: 7pt;
+  color: #9ca3af;
+  text-align: center;
+  page-break-inside: avoid;
+  margin-top: 15pt;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header-block">
+  <div class="header-left">
+    {% if logo_base64 %}
+    <img src="{{ logo_base64 }}" style="max-height: 60pt; max-width: 200pt; margin-bottom: 5pt;" alt="Logo" />
+    {% else %}
+    <div class="company-name">{{ company.name or "Total Engineering Works" }}</div>
+    {% endif %}
+    {% if company.address %}
+    <div class="company-detail">{{ company.address }}</div>
+    {% endif %}
+    <div class="company-detail">
+      {% if company.phone %}Ph: {{ company.phone }}{% endif %}
+      {% if company.email %}  |  {{ company.email }}{% endif %}
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="doc-title">APPROXIMATE COST ESTIMATE</div>
+    <div class="doc-subtitle">Date: {{ estimate_date }}</div>
+  </div>
+</div>
+
+<div class="warning-badge">
+  NOT A FINAL QUOTATION
+</div>
+
+<!-- CUSTOMER INFO -->
+<div class="info-grid no-break">
+  <div class="info-col">
+    <div class="section-title">Customer Details</div>
+    <div class="info-row">
+      <div class="info-label">Company</div>
+      <div class="info-value">{{ customer.company_name or "N/A" }}</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Contact</div>
+      <div class="info-value">{{ customer.contact_person or "N/A" }}</div>
+    </div>
+    {% if customer.email %}
+    <div class="info-row">
+      <div class="info-label">Email</div>
+      <div class="info-value">{{ customer.email }}</div>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="info-col">
+    <div class="section-title">Estimate Summary</div>
+    <div class="info-row">
+      <div class="info-label">Total Parts</div>
+      <div class="info-value">{{ total_parts }}</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Total Weight</div>
+      <div class="info-value">{{ "%.2f" | format(total_weight) }} kg</div>
+    </div>
+  </div>
+</div>
+
+<!-- UPLOADED FILES SUMMARY -->
+<div class="section-title">Uploaded Files Summary</div>
+<table class="items-table">
+  <thead>
+    <tr>
+      <th style="width: 35%;">Part Name</th>
+      <th style="width: 20%;">Material</th>
+      <th style="width: 12%;">Thick (mm)</th>
+      <th style="width: 8%;">Qty</th>
+      <th style="width: 10%;">Wt (kg)</th>
+      <th class="r" style="width: 15%;">Estimated Cost</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr class="no-break">
+      <td class="bold">{{ item.part_name }}</td>
+      <td>{{ item.material }}</td>
+      <td>{{ "%.1f" | format(item.thickness) }}</td>
+      <td>{{ item.quantity }}</td>
+      <td class="mono">{{ "%.2f" | format(item.weight) }}</td>
+      <td class="r mono bold">INR {{ "{:,.2f}".format(item.line_total) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- COMMERCIAL SUMMARY -->
+<div class="clearfix no-break">
+  <div class="summary-block">
+    <div class="summary-row">
+      <div class="summary-label">Estimated Range</div>
+      <!-- Add a ~10% buffer string to emphasize approximation -->
+      <div class="summary-value mono">
+        INR {{ "{:,.0f}".format(total_cost * 0.95) }} - {{ "{:,.0f}".format(total_cost * 1.05) }}
+      </div>
+    </div>
+    <div class="summary-total-row">
+      <div class="summary-total-label">Est. Cost</div>
+      <div class="summary-total-value mono">~ INR {{ "{:,.0f}".format(total_cost) }}</div>
+    </div>
+  </div>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer-block">
+  <div class="disclaimer-title">IMPORTANT DISCLAIMER</div>
+  This estimate is automatically generated based on the files provided. It is intended for indicative purposes only.<br/>
+  <strong>Final commercial quotation may vary after:</strong>
+  <ul class="disclaimer-list">
+    <li>Engineering review</li>
+    <li>Material availability review</li>
+    <li>Production review</li>
+    <li>Tolerance review</li>
+    <li>Nesting review</li>
+    <li>Commercial review</li>
+  </ul>
+</div>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  Automated Estimate &nbsp;|&nbsp; {{ company.name or "Total Engineering Works" }} &nbsp;|&nbsp; Not valid for commercial transactions.
+</div>
+
+</body>
+</html>
