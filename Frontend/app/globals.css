@@ -1,0 +1,344 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Theme Definitions ────────────────────────────────────────────────────
+   All design tokens are CSS custom properties.
+   Switching data-theme on <html> instantly re-themes every Tailwind class.
+   ─────────────────────────────────────────────────────────────────────── */
+
+/* ── Theme: Midnight Engineering (default) ─────────────────────────────── */
+:root,
+[data-theme="midnight"] {
+  /* Backgrounds */
+  --bg-void:        #000000;
+  --bg-base:        #0D0D0D;
+  --bg-surface:     #1A1A1A;
+  --bg-elevated:    #242424;
+  --bg-section-alt: #141414;
+
+  /* Borders */
+  --border-hairline: rgba(255,255,255,0.07);
+  --border-default:  rgba(255,255,255,0.11);
+  --border-active:   rgba(255,255,255,0.20);
+  --border-accent:   rgba(0,122,255,0.35);
+
+  /* Text */
+  --text-primary:   #EBEBEB;
+  --text-secondary: #8A8A8E;
+  --text-muted:     #48484A;
+  --text-inverse:   #FFFFFF;
+
+  /* Accent */
+  --accent-primary:       #007AFF;
+  --accent-primary-hover: #0066D6;
+  --accent-primary-rgb:   0,122,255;
+  --accent-steel:         #636366;
+  --accent-gold:          #C8A96E;
+  --accent-error:         #FF453A;
+
+  /* Scrollbar */
+  --scrollbar-track: #0D0D0D;
+  --scrollbar-thumb: #2C2C2E;
+  --scrollbar-hover: #3A3A3C;
+
+  /* Selection */
+  --selection-bg: rgba(0,122,255,0.25);
+
+  /* Gradients */
+  --hero-gradient:    linear-gradient(180deg, #000000 0%, #0D0D0D 100%);
+  --section-gradient: linear-gradient(180deg, #0D0D0D 0%, #1A1A1A 100%);
+
+  /* Grid background visibility — blue needs higher opacity than amber */
+  --grid-opacity: 0.25;
+}
+
+/* ── Theme: Slate + Industrial Amber ───────────────────────────────────── */
+[data-theme="amber"] {
+  /* Backgrounds */
+  --bg-void:        #0C1014;
+  --bg-base:        #111418;
+  --bg-surface:     #191E24;
+  --bg-elevated:    #1E242C;
+  --bg-section-alt: #161B21;
+
+  /* Borders */
+  --border-hairline: rgba(212,130,26,0.10);
+  --border-default:  rgba(212,130,26,0.18);
+  --border-active:   rgba(212,130,26,0.35);
+  --border-accent:   rgba(212,130,26,0.40);
+
+  /* Text */
+  --text-primary:   #E4E8EE;
+  --text-secondary: #8898A8;
+  --text-muted:     #4A5668;
+  --text-inverse:   #FFFFFF;
+
+  /* Accent */
+  --accent-primary:       #D4821A;
+  --accent-primary-hover: #B86E14;
+  --accent-primary-rgb:   212,130,26;
+  --accent-steel:         #6B7788;
+  --accent-gold:          #C49A40;
+  --accent-error:         #E55A3A;
+
+  /* Scrollbar */
+  --scrollbar-track: #111418;
+  --scrollbar-thumb: #252C36;
+  --scrollbar-hover: #3A4454;
+
+  /* Selection */
+  --selection-bg: rgba(212,130,26,0.25);
+
+  /* Gradients */
+  --hero-gradient:    linear-gradient(180deg, #0C1014 0%, #111418 100%);
+  --section-gradient: linear-gradient(180deg, #111418 0%, #191E24 100%);
+
+  /* Amber warm tone reads stronger — lower opacity still looks great */
+  --grid-opacity: 0.15;
+}
+
+/* ── Theme: Deep Navy Authority ────────────────────────────────────────── */
+[data-theme="navy"] {
+  /* Backgrounds */
+  --bg-void:        #030D1A;
+  --bg-base:        #061020;
+  --bg-surface:     #0A1B30;
+  --bg-elevated:    #0D2040;
+  --bg-section-alt: #081628;
+
+  /* Borders */
+  --border-hairline: rgba(26,111,232,0.12);
+  --border-default:  rgba(26,111,232,0.20);
+  --border-active:   rgba(26,111,232,0.40);
+  --border-accent:   rgba(26,111,232,0.50);
+
+  /* Text */
+  --text-primary:   #E8EEF8;
+  --text-secondary: #7A9ABF;
+  --text-muted:     #3E5877;
+  --text-inverse:   #FFFFFF;
+
+  /* Accent */
+  --accent-primary:       #1A6FE8;
+  --accent-primary-hover: #1858C4;
+  --accent-primary-rgb:   26,111,232;
+  --accent-steel:         #4A7FA8;
+  --accent-gold:          #A07C3A;
+  --accent-error:         #E54040;
+
+  /* Scrollbar */
+  --scrollbar-track: #061020;
+  --scrollbar-thumb: #1A3660;
+  --scrollbar-hover: #2C4E8A;
+
+  /* Selection */
+  --selection-bg: rgba(26,111,232,0.25);
+
+  /* Gradients */
+  --hero-gradient:    linear-gradient(180deg, #030D1A 0%, #061020 100%);
+  --section-gradient: linear-gradient(180deg, #061020 0%, #0A1B30 100%);
+
+  /* Navy blue needs higher opacity — deep background absorbs blue light */
+  --grid-opacity: 0.25;
+}
+
+/* ─── Base resets ──────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: auto; /* Lenis handles smooth scroll */
+    transition:
+      background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* Smooth color transitions for theme switching */
+    transition-property: background-color, border-color, color, box-shadow;
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Exclude transforms from global transition so animations still work */
+  *, *::before, *::after {
+    transition-property: background-color, border-color, color;
+  }
+
+  ::selection {
+    background-color: var(--selection-bg);
+    color: var(--text-primary);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.025em;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  input, textarea, select, button {
+    font-family: inherit;
+  }
+
+  /* Force dark background on native dropdown options to prevent white hover flash */
+  select option {
+    background-color: #242424;
+    color: #EBEBEB;
+  }
+
+  /* Theme-aware option backgrounds */
+  [data-theme="amber"] select option {
+    background-color: #1E242C;
+    color: #E4E8EE;
+  }
+
+  [data-theme="navy"] select option {
+    background-color: #0D2040;
+    color: #E8EEF8;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-hover);
+  }
+}
+
+/* ─── Utility layer ────────────────────────────────────────────────────── */
+@layer utilities {
+  .container-padded {
+    @apply mx-auto max-w-container px-6 md:px-10 xl:px-container-x;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-spec-block {
+    @apply font-mono text-spec text-text-secondary;
+  }
+
+  .hairline {
+    @apply border-border-hairline;
+  }
+
+  .eyebrow {
+    @apply font-mono text-label uppercase tracking-[0.14em] text-accent-steel;
+  }
+
+  /* Theme-aware glow utilities */
+  .glow-primary {
+    box-shadow: 0 0 40px rgba(var(--accent-primary-rgb), 0.20);
+  }
+  .glow-primary-sm {
+    box-shadow: 0 0 20px rgba(var(--accent-primary-rgb), 0.15);
+  }
+
+  /* Prevent theme transitions on SVG / transform-heavy elements */
+  .no-theme-transition,
+  .no-theme-transition * {
+    transition: none !important;
+  }
+
+  /* ── Logo Slider ───────────────────────────────────────────────────── */
+  /* Edge-fade mask — logos fade to transparent at left & right edges */
+  .logo-slider-mask {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 8%,
+      black 92%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 8%,
+      black 92%,
+      transparent 100%
+    );
+  }
+
+  /* Pause entire row on hover */
+  .logo-row:hover .logo-track {
+    @apply [animation-play-state:paused];
+  }
+
+  /* Scrollbar Hide Utility */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Custom Thin Scrollbar for Modals */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--border-default);
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-primary);
+  }
+}
+
+/* ── Marquee Keyframes ─────────────────────────────────────────────────────
+   marquee-left  → logo strip scrolls from right to left (standard direction)
+   marquee-right → logo strip scrolls from left to right (alternate rows)
+   The inner track is 2× the logo set width; animating to -50% creates
+   a seamless loop because the second half is identical to the first.
+   ─────────────────────────────────────────────────────────────────────── */
+@keyframes marquee-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
